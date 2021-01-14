@@ -16,5 +16,6 @@
 
 ### run
     ganache-cli
+    cd client && npm run start
     
 
