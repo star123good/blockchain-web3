@@ -3,7 +3,12 @@
 ### install
     npm install -g web3
     npm install -g ganache-cli
+    npm install -g truffle
+
+### build react-web3
+    truffle unbox react
 
 ### run
     ganache-cli
+    truffle init
 
