@@ -41,18 +41,38 @@ class App extends Component {
   };
 
   runExample = async () => {
-    const { accounts, contract } = this.state;
+    const { web3, accounts, contract } = this.state;
 
-    // Stores a given value, 5 by default.
-    await contract.methods.set(5).send({ from: accounts[0] });
+    const price = '10000000000000';
+    await contract.methods.sendether().send({ from: accounts[0], value: price });
+
+    await web3.eth.sendTransaction({from: accounts[0], to: accounts[1], value: price});
 
     // Get the value from the contract to prove it worked.
-    const response = await contract.methods.get().call();
+    const response = await contract.methods.iden().call();
 
     console.log("response", response);
 
     // Update state with the result.
     this.setState({ storageValue: response });
+
+    const num = 36;
+    const str = "Hello World!";
+
+    const numWei = await web3.utils.toWei(num.toString(), 'microether');
+    console.log(`${num} to Wei : ${numWei}`);
+
+    const numHex = await web3.utils.numberToHex(num);
+    const numFromHex = await web3.utils.hexToNumber(numHex);
+    console.log(`${num} to Hex : ${numHex}, back : ${numFromHex}`);
+
+    const strHex = await web3.utils.asciiToHex(str);
+    const strFromHex = await web3.utils.hexToAscii(strHex);
+    console.log(`${str} to Hex : ${strHex}, back : ${strFromHex}`);
+
+    const hashStr = await web3.utils.sha3(str);
+    console.log(`${str} to Hash : ${hashStr}`);
+
   };
 
   render() {

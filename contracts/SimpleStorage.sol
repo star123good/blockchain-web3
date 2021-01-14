@@ -2,13 +2,19 @@
 pragma solidity >=0.4.21 <0.7.0;
 
 contract SimpleStorage {
-  uint storedData = 5;
+  string public iden;
 
-  function set(uint x) public {
-    storedData = x;
+  function sendether() public payable {
+    iden = "Sendehter got called";
   }
+  
+  // receive() external public {
+  //   iden = "fallback got called";
+  // }
 
-  function get() public view returns (uint) {
-    return storedData;
+  function withdraw() public {
+    address my = address(this);
+    uint256 bal = my.balance;
+    (msg.sender).transfer(bal);
   }
 }
