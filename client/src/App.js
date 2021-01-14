@@ -17,11 +17,16 @@ class App extends Component {
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
+
+      console.log("accounts", accounts, "networkId", networkId, "SimpleStorageContract", SimpleStorageContract.networks);
+
       const deployedNetwork = SimpleStorageContract.networks[networkId];
       const instance = new web3.eth.Contract(
         SimpleStorageContract.abi,
         deployedNetwork && deployedNetwork.address,
       );
+
+      console.log("instance", instance);
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
@@ -43,6 +48,8 @@ class App extends Component {
 
     // Get the value from the contract to prove it worked.
     const response = await contract.methods.get().call();
+
+    console.log("response", response);
 
     // Update state with the result.
     this.setState({ storageValue: response });
